@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.es.jd.temp.dao.EsUserDao">
+
+    <resultMap type="com.es.jd.temp.entity.EsUserEntity" id="EsUserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="tags" column="tags" jdbcType="VARCHAR"/>
+        <result property="userDesc" column="user_desc" jdbcType="VARCHAR"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="VARCHAR"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+        <result property="lat" column="lat" jdbcType="DECIMAL"/>
+        <result property="lon" column="lon" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <sql id="common_map">
+        id, name, age, tags, user_desc, is_deleted, gmt_create, gmt_modified, lat, lon
+    </sql>
+    <!--查询单个-->
+    <select id="queryById" resultMap="EsUserMap">
+        select
+          <include refid="common_map"/>
+        from es_user
+        where id = #{id}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="EsUserMap">
+        select
+        <include refid="common_map"/>
+        from es_user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="age != null">
+                and age = #{age}
+            </if>
+            <if test="tags != null and tags != ''">
+                and tags = #{tags}
+            </if>
+            <if test="userDesc != null and userDesc != ''">
+                and user_desc = #{userDesc}
+            </if>
+            <if test="isDeleted != null and isDeleted != ''">
+                and is_deleted = #{isDeleted}
+            </if>
+            <if test="gmtCreate != null">
+                and gmt_create = #{gmtCreate}
+            </if>
+            <if test="gmtModified != null">
+                and gmt_modified = #{gmtModified}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into es_user(name, age, tags, user_desc, is_deleted, lat, lon)
+        values (#{name}, #{age}, #{tags}, #{userDesc}, #{isDeleted}, #{lat}, #{lon})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update es_user
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="tags != null and tags != ''">
+                tags = #{tags},
+            </if>
+            <if test="userDesc != null and userDesc != ''">
+                user_desc = #{userDesc},
+            </if>
+            <if test="isDeleted != null and isDeleted != ''">
+                is_deleted = #{isDeleted},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from es_user where id = #{id}
+    </delete>
+
+</mapper>

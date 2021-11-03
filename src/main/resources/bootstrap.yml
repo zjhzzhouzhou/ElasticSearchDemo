@@ -1,0 +1,27 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.56.104:8848
+        namespace: d36e3897-de83-48bf-9768-b3e64298413f
+        file-extension: yml
+#        prefix: es
+        ext-config:
+          - data-id: es-datasource.yml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: es-elasticsearch.yml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: es-rocketmq.yml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: es-mybatis.yml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: es-demo.yml
+            group: DEFAULT_GROUP
+            refresh: true
+
+
+
