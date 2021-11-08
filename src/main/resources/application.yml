@@ -17,6 +17,7 @@ server:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 #
 #
+
 #rocketmq:
 #  namesrvAddr: 192.168.56.104:9876
 #  sendMsgTimeoutMillis: 3000
